@@ -13,16 +13,21 @@ function MessageForm() {
     e.preventDefault();
 
     const input = e.currentTarget[0] as HTMLInputElement;
-
-    setMessages([...messages, { role: "user", content: input.value }]);
+    const messageToSend: Message = { role: "user", content: input.value };
+    const messagesToSend = [...messages, messageToSend]
 
     const res = await fetch("api/sendToGPT", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify({ messages:messagesToSend }),
     });
+    const data = await res.json();
+    const message: Message = data;
+
+    setMessages([...messagesToSend, message]);
+
     input.value = "";
   };
   return (

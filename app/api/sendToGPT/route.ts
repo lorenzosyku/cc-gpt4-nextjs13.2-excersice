@@ -17,5 +17,5 @@ export async function POST(request: Request) {
   const { data } = response;
   //console.log(data.choices[0].message)
 
-  return NextResponse.json(data.choices);
+  return NextResponse.json(data.choices[0].message);
 }
